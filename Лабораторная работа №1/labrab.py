@@ -5,11 +5,11 @@ from typing import Iterator
 
 
 class Matrix:
-    def __init__(self, row: int, col: int, fill_value: int | float = 0.0) -> None:
+    def __init__(self, row: int, col: int, fill_value: float | int = 0) -> None:
         if not (isinstance(row, int) and row > 0):
-            raise IndexError("Некорректное значение для строки")
+            raise ValueError("Некорректное значение для строки")
         if not (isinstance(col, int) and col > 0):
-            raise IndexError("Некорректное значение для столбца")
+            raise ValueError("Некорректное значение для столбца")
         if not isinstance(fill_value, (int, float)):
             raise ValueError("Некорректное значение для числа заполнения")
 

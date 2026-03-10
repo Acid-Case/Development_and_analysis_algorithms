@@ -36,15 +36,15 @@ class Node:
 
 class Queue:
     def __init__(self) -> None:
-        self.__front: Optional["Node"] = None
-        self.__end: Optional["Node"] = None
+        self.__front: Optional[Node] = None
+        self.__end: Optional[Node] = None
         self.__size: int = 0
 
     def find_one(self, p: int) -> Any:
-        if p > self.__size:
-            raise IndexError(f"Индекс вышел за пределы очереди: {p}")
         if not (isinstance(p, int) and p >= 0):
             raise ValueError(f"Индекс должен быть целым положительным числом: {p}")
+        if p >= self.__size:
+            raise IndexError(f"Индекс вышел за пределы очереди: {p}")
 
         for ind, node in enumerate(self):
             if ind == p:
@@ -116,15 +116,17 @@ class Queue:
 
 def main():
     q = Queue()
+    arr = [10, 20, 30, 40, 50]
 
-    q.push(1)
-    q.push(2)
-    q.push(3)
-    q.push(4)
+    for i in arr:
+        q.push(i)
 
-    print(q.find_one(1))
-    print(q.find_one(3))
-    print(q.find_all([1, 3, -2]))
+    q.pop()
+
+    q.push(60)
+    q.push(70)
+
+    print(q.find_all([0, 2, 4]))
 
     q.clear()
 

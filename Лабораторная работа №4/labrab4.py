@@ -215,12 +215,12 @@ class BinaryTree:
         return node
 
     def min(self, node: Optional["TreeNode"] = None) -> TreeNode:
+        if self.is_empty():
+            raise ValueError("Дерево пусто")
         if node is None:
             node = self.__root
         if not isinstance(node, TreeNode):
             raise ValueError(f"Элемент должен принадлежать классу {TreeNode.__name__}")
-        if self.is_empty():
-            raise ValueError("Дерево пусто")
 
         while node.left:
             node = node.left
