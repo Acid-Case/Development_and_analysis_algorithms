@@ -114,19 +114,53 @@ class Queue:
         return f"Queue({' -> '.join([str(node.value) for node in self])} -> None)"
 
 
+def get_int(prompt: str, min: int = 0, max: int = 100_000_000) -> int:
+    while True:
+        try:
+            num = int(input(prompt))
+
+            if num < min or num > max:
+                print(f"Число должно быть в диапозоне от {min} до {max}")
+                continue
+
+            return num
+        except ValueError:
+            print("Ошибка: необходимо ввести целое число. Попробуйте снова.")
+
+
+def get_elem(prompt: str) -> int | float | str:
+    while True:
+        try:
+            data_type = get_int("Введите тип элемента (0 - int, 1 - float, 2 - str): ", 0, 2)
+            user_input = input(prompt)
+
+            if data_type == 0:
+                return int(user_input)
+            elif data_type == 1:
+                return float(user_input)
+            elif data_type == 2:
+                return user_input
+        except ValueError:
+            if data_type == 0:
+                print("Ошибка: необходимо ввести целое число. Попробуйте снова.")
+            elif data_type == 1:
+                print("Ошибка: необходимо ввести вещественное число. Попробуйте снова.")
+            else:
+                print("Неизвестная ошибка. Попробуйте снова.")
+
+
 def main():
     q = Queue()
-    arr = [10, 20, 30, 40, 50]
+    size = get_int("Введите размер очереди: ")
+    arr = [get_elem("Введите элемент очереди: ") for _ in range(size)]
 
     for i in arr:
         q.push(i)
 
-    q.pop()
+    size = get_int("Сколько индексов найти: ")
+    arr = [get_int("Введите индекс элемента очереди: ") for _ in range(size)]
 
-    q.push(60)
-    q.push(70)
-
-    print(q.find_all([0, 2, 4]))
+    print(q.find_all(arr))
 
     q.clear()
 

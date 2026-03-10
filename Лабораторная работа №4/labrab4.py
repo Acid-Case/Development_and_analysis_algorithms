@@ -250,29 +250,50 @@ class BinaryTree:
         return iter(self.traverse_inorder())
 
 
+def get_int(prompt: str, min: int = 0, max: int = 100_000_000) -> int:
+    while True:
+        try:
+            num = int(input(prompt))
+
+            if num < min or num > max:
+                print(f"Число должно быть в диапозоне от {min} до {max}")
+                continue
+
+            return num
+        except ValueError:
+            print("Ошибка: необходимо ввести целое число. Попробуйте снова.")
+
+
+def get_elem(prompt: str) -> int | float | str:
+    while True:
+        try:
+            data_type = get_int("Введите тип элемента (0 - int, 1 - float, 2 - str): ", 0, 2)
+            user_input = input(prompt)
+
+            if data_type == 0:
+                return int(user_input)
+            elif data_type == 1:
+                return float(user_input)
+            elif data_type == 2:
+                return user_input
+        except ValueError:
+            if data_type == 0:
+                print("Ошибка: необходимо ввести целое число. Попробуйте снова.")
+            elif data_type == 1:
+                print("Ошибка: необходимо ввести вещественное число. Попробуйте снова.")
+            else:
+                print("Неизвестная ошибка. Попробуйте снова.")
+
+
 def main():
     tree = BinaryTree()
+    size = get_int("Введите кол-во элементов дерева: ")
+    arr = [get_elem("Введите элемент дерева: ") for _ in range(size)]
 
-    # tree.insert(4)
-    # tree.insert(2)
-    # tree.insert(1)
-    # tree.insert(3)
-    # tree.insert(6)
-    # tree.insert(5)
-    # tree.insert(7)
+    for i in arr:
+        tree.insert(i)
 
-
-    tree.insert(-4)
-    tree.insert(2)
-    tree.insert(-1)
-    tree.insert(3)
-    tree.insert(6)
-    tree.insert(-5)
-    tree.insert(-7)
-    tree.display()
-
-    print(tree.pos_elements_search_1())
-    print(tree.pos_elements_search_2())
+    print(f"\nПоложительные элементы: {tree.pos_elements_search_2()}")
 
 
 if __name__ == "__main__":
